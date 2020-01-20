@@ -12,8 +12,19 @@
     // { id: 2, header: "Item 2", text: "hore more" }
   ];
 
+  if(window.localStorage.getItem("notes")){
+     notes = JSON.parse(window.localStorage.getItem("notes"));
+  }
+
+
+
+
   let activeNote = {};
   let backgroundActive = false;
+  if(window.localStorage.getItem("bgactive")){
+    backgroundActive = JSON.parse(window.localStorage.getItem("bgactive"));
+  }
+
   const addNewNoteItem = () => {
     let id = notes.length + 1;
     notes = [...notes, { id: id, header: "", text: "" }];
@@ -37,10 +48,14 @@
     var updatedItem = e.detail;
     var index = notes.findIndex(n => n.id === updatedItem.id);
     notes[index] = updatedItem;
+
+    window.localStorage.setItem("notes", JSON.stringify(notes));
   };
 
   const userClicked = e => {
     backgroundActive = !backgroundActive;
+
+    window.localStorage.setItem("bgactive", JSON.stringify(backgroundActive));
   };
 
   function updateActiveItem(active) {
