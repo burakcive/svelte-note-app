@@ -39,6 +39,7 @@
     background-color: #343a40 !important;
     height: 35px;
     z-index: 100;
+    display: none;
   }
 </style>
 
@@ -48,10 +49,16 @@
   import NoteItem from "./NoteItem.svelte";
   import ToolBar from "./ToolBar.svelte";
 
-  let notes = [{header: "Item 1", text: "Lorem ipsum dor sit amet!" }, {header: "Item 2", text: "hore more" }]
+  let notes = [{id:1, header: "Item 1", text: "Lorem ipsum dor sit amet!" }, {id:2,header: "Item 2", text: "hore more" }]
 
   const addNewNoteItem = () => {
-	  notes = [...notes, {header: "", text: "" }]
+    let id = notes.length + 1;
+	  notes = [...notes, {id: id, header: "", text: "" }]
+  };
+
+  const removeNoteItem = (e) => {
+    let idToRemove = e.detail;
+	  notes = notes.filter(n=> n.id !== idToRemove);
   };
 
 </script>
@@ -64,7 +71,7 @@
   </div>
   <div class="text-container">
   {#each notes as note}
-    <NoteItem {...note}/>
+    <NoteItem {...note}  on:removenote={removeNoteItem}/>
   {/each}	
 
   </div>
