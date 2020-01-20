@@ -2,3 +2,13 @@ body {
     margin: 0;
     color: white;
 }
+
+
+a {
+    color: rgb(175, 163, 163);
+  }
+
+  a:hover {
+    text-decoration: none;
+    color: whitesmoke;
+  }

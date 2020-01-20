@@ -10,6 +10,7 @@
 
 <style>
   .side-bar {
+    padding-top: 40px;
     position: absolute;
     width: 2em;
     height: 100%;
@@ -18,7 +19,7 @@
     z-index: 10;
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: repeat(36, 1fr);
+    grid-template-rows: repeat(36, 1.3em);
   }
 
   .side-bar-right {
@@ -36,8 +37,7 @@
 </style>
 
 <div class="side-bar side-bar-right">
-  <i class="fa" />
-  <i class="fa" />
+ 
   <i class="fa fa-user" />
   <i class="fa fa-cog" />
   <i on:click={addNewNoteItem} class="fa fa-plus" />
