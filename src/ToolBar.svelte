@@ -1,10 +1,25 @@
 <script>
   import { createEventDispatcher } from "svelte";
+  import { activeItem } from "./store.js";
+
+  let activated=false;
+  activeItem.subscribe(val => {
+    console.log("item activated", val);
+    activated = val && val.length > 0;
+  });
 
   const dispatch = createEventDispatcher();
 
   const addNewNoteItem = () => {
     dispatch("addNewNoteItem");
+  };
+
+  const deleteNoteItem = () => {
+    dispatch("deleteNoteItem");
+  };
+
+  const userClicked = () => {
+    dispatch("userClicked");
   };
 </script>
 
@@ -34,11 +49,22 @@
     font-size: 20px;
     padding-left: 7px;
   }
+
+  .disabled {
+    pointer-events: none;
+    color: gray;
+  }
+
+  .disabled:hover {
+    font-size: 16px !important;
+    padding-left: 8px;
+  }
 </style>
 
 <div class="side-bar side-bar-right">
- 
-  <i class="fa fa-user" />
+
+  <i on:click={userClicked}  class="fa fa-user" />
   <i class="fa fa-cog" />
   <i on:click={addNewNoteItem} class="fa fa-plus" />
+  <i class:disabled="{activated !== true}" on:click={deleteNoteItem} class="fa fa-trash-o" />
 </div>

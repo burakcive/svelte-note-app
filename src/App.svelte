@@ -1,4 +1,5 @@
 <script>
+  import { fade, fly } from "svelte/transition";
   import NavBar from "./NavBar.svelte";
   import Footer from "./Footer.svelte";
   import NoteItem from "./NoteItem.svelte";
@@ -7,20 +8,21 @@
   import { activeItem } from "./store.js";
 
   let notes = [
-    { id: 1, header: "Item 1", text: "Lorem ipsum dor sit amet!" },
-    { id: 2, header: "Item 2", text: "hore more" }
+    // { id: 1, header: "Item 1", text: "Lorem ipsum dor sit amet!" },
+    // { id: 2, header: "Item 2", text: "hore more" }
   ];
 
   let activeNote = {};
-
+  let backgroundActive = false;
   const addNewNoteItem = () => {
     let id = notes.length + 1;
     notes = [...notes, { id: id, header: "", text: "" }];
   };
 
-  const removeNoteItem = e => {
-    let idToRemove = e.detail;
-    notes = notes.filter(n => n.id !== idToRemove);
+  const deleteActiveNoteItem = () => {
+    if (activeNote && activeNote.length > 0) {
+      notes = notes.filter(n => n.id !== activeNote[0].id);
+    }
   };
 
   const onNoteItemSelected = e => {
@@ -37,10 +39,16 @@
     notes[index] = updatedItem;
   };
 
-  function updateActiveItem(activeNote) {
+  const userClicked = e => {
+    backgroundActive = !backgroundActive;
+  };
+
+  function updateActiveItem(active) {
     activeItem.update(val => {
-      return (val = activeNote);
+      return (val = active);
     });
+
+    activeNote = active;
   }
 </script>
 
@@ -52,6 +60,11 @@
     z-index: 100;
     display: grid;
     grid-template-columns: 5fr auto;
+  }
+
+  .background-active {
+    background: url(https://i2.wp.com/www.iamabiker.com/wp-content/uploads/2018/04/Royal-Enfield-Thunderbird-350X-HD-wallpapers-1.jpg) !important;
+    background-size: cover !important;
   }
 
   .text-container {
@@ -92,23 +105,36 @@
     height: 35px;
     z-index: 100;
   }
+
+  h3 {
+    color: #343a40;
+    grid-column: 2;
+  }
 </style>
 
 <div class="main-grid">
-  <ToolBar on:addNewNoteItem={addNewNoteItem} />
+  <ToolBar
+    on:deleteNoteItem={deleteActiveNoteItem}
+    on:addNewNoteItem={addNewNoteItem}
+    on:userClicked={userClicked} />
 
   <div class="navigation">
     <NavBar />
   </div>
-  <div on:click={e => updateActiveItem(null)} class="text-container">
-    {#each notes as note}
-      <NoteItem
-        {...note}
-        on:onupdate={updateNoteItem}
-        on:removenote={removeNoteItem}
-        on:onselected={onNoteItemSelected} />
-    {/each}
-
+  <div
+    on:click={e => updateActiveItem(null)}
+    class="text-container"
+    class:background-active={backgroundActive === true}>
+    {#if notes.length > 0}
+      {#each notes as note}
+        <NoteItem
+          {...note}
+          on:onupdate={updateNoteItem}
+          on:onselected={onNoteItemSelected} />
+      {/each}
+    {:else}
+      <h3>Hello there, howdy? Click + sign to create a new note for Today</h3>
+    {/if}
   </div>
   <div class="footer">
     <Footer />

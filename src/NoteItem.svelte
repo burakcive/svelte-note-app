@@ -49,7 +49,7 @@
     border: 1px solid #b4aaaa;
   }
   textarea {
-    background-color: rgb(255, 253, 250);
+    background-color: rgba(255, 253, 250, 0.884);
     font: normal 14px verdana;
     line-height: 25px;
     padding: 2px 10px;
@@ -97,8 +97,6 @@
   } */
 </style>
 
-<!-- 
-{@debug activated} -->
 <div
   class:activated
   on:click={onSelected}
