@@ -34,7 +34,7 @@
 
 <style>
   .activated {
-    border: 1px solid rgb(182, 80, 80) !important;
+    border: 2px solid rgba(215, 150, 150, 0.77) !important;
   }
 
   .note-item {
@@ -46,13 +46,13 @@
       "header header"
       "textarea textarea";
 
-    border: 1px solid #b4aaaa;
+    border: 2px solid #b4aaaa7d;
   }
   textarea {
-    background-color: rgba(255, 253, 250, 0.884);
+     background-color: rgba(255, 253, 250, 0.884);
     font: normal 14px verdana;
-    line-height: 25px;
-    padding: 2px 10px;
+    line-height: 26px;
+    padding: 16px 15px;
     border: 0;
     border-style: none;
     border-color: transparent;
@@ -60,10 +60,16 @@
     outline-offset: 0;
     box-shadow: none;
     resize: none;
+    grid-area: textarea;
+    background-size: auto auto;
+    /* background-color: rgba(255, 255, 255, 1); */
+    background-image: repeating-linear-gradient(0deg, transparent, transparent 25px, rgba(184, 184, 184, 1) 25px, rgba(184, 184, 184, 1) 26px );
+
 
     grid-area: textarea;
   }
 
+ 
   .input-title {
     background: transparent;
     border: 0;
@@ -75,7 +81,7 @@
     text-align: center;
     font-size: 1em;
     color: #617373;
-    background-color: rgb(255, 253, 250);
+    background-color: rgba(255, 253, 250, 0.884);
     text-align: center;
 
     grid-area: header;

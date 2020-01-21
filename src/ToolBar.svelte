@@ -30,7 +30,7 @@
     width: 2em;
     height: 100%;
     border: 1px solid #343a40;
-    background-color: #501f1fed;
+    background-color: rgb(186, 97, 97);
     z-index: 10;
     display: grid;
     grid-template-columns: 1fr;

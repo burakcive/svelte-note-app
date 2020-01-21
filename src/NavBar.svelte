@@ -12,11 +12,11 @@
     margin-right: 1em;
   }
 
-
-span{
-  margin-right: 2em;
-}
-
+  span {
+    margin-right: 8px;
+    color: #ed7a68;
+    font-size: 17px;
+  }
 </style>
 
 <ul class="nav">
@@ -29,8 +29,9 @@ span{
   <li class="navitem">
     <a class="" href="/">Donate!</a>
   </li>
- 
+
 </ul>
 <span>
-   Scrawling  <i class="fa fa-exclamation-triangle"></i>
- </span>
+  Scrawling &nbsp;&nbsp;&nbsp;
+  <i class="fa fa-exclamation-triangle" />
+</span>

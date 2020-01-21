@@ -5,10 +5,10 @@ body {
 
 
 a {
-    color: rgb(175, 163, 163);
+    color: rgb(200, 211, 200);
   }
 
   a:hover {
     text-decoration: none;
-    color: whitesmoke;
+    color: #f7faec;
   }

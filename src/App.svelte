@@ -16,9 +16,6 @@
      notes = JSON.parse(window.localStorage.getItem("notes"));
   }
 
-
-
-
   let activeNote = {};
   let backgroundActive = false;
   if(window.localStorage.getItem("bgactive")){
@@ -69,12 +66,15 @@
 
 <style>
   .navigation {
-    grid-area: navigation;
-    background-color: #5f5f5f;
+    background-color: rgb(90, 96, 102);
     height: 25px;
     z-index: 100;
     display: grid;
     grid-template-columns: 5fr auto;
+    font-family: poor richard regular;
+    font-size: 16px;
+
+    grid-area: navigation;
   }
 
   .background-active {
@@ -84,7 +84,7 @@
 
   .text-container {
     grid-area: container;
-    background-color: #efefef;
+    background-color: #fcfbf5;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-auto-rows: minmax(40em, 40em);
@@ -101,17 +101,13 @@
     right: 0;
     bottom: 0;
     display: grid;
-    grid-template-columns: 1fr 2fr 2fr 2fr 2fr 2fr 1fr;
-    grid-template-rows: auto 2fr 2fr 2fr 2fr 2fr auto;
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-rows: auto 2fr;
 
     grid-template-areas:
-      "navigation navigation navigation navigation navigation navigation navigation"
-      "container container container container container container container"
-      "container container container container container container container"
-      "container container container container container container container"
-      "container container container container container container container"
-      "container container container container container container container"
-      "footer footer footer footer footer footer footer";
+      "navigation  navigation navigation"
+      "container container container"
+      /* "footer footer footer"; */
   }
 
   .footer {
@@ -151,8 +147,8 @@
       <h3>Hello there, howdy? Click + sign to create a new note for Today</h3>
     {/if}
   </div>
-  <div class="footer">
+  <!-- <div class="footer">
     <Footer />
-  </div>
+  </div> -->
 
 </div>
