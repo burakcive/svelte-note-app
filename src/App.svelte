@@ -4,6 +4,7 @@
   import Footer from "./Footer.svelte";
   import NoteItem from "./NoteItem.svelte";
   import ToolBar from "./ToolBar.svelte";
+    import DateBar from "./DateBar.svelte";
 
   import { activeItem } from "./store.js";
 
@@ -124,6 +125,8 @@
 </style>
 
 <div class="main-grid">
+
+<DateBar />
   <ToolBar
     on:deleteNoteItem={deleteActiveNoteItem}
     on:addNewNoteItem={addNewNoteItem}
