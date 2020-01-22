@@ -33,6 +33,9 @@
 </script>
 
 <style>
+  * {
+    font-family: "Yanone Kaffeesatz", sans-serif;
+  }
   .activated {
     border: 2px solid rgba(215, 150, 150, 0.77) !important;
   }
@@ -46,7 +49,7 @@
   }
   textarea {
     background-color: rgba(255, 253, 250, 0.884);
-    font: normal 14px verdana;
+    font-size: 1em;
     line-height: 26px;
     padding: 16px 15px;
     border: 0;
@@ -58,7 +61,7 @@
     resize: none;
     width: 100%;
     height: 30em;
-   
+
     background-size: auto auto;
 
     background-image: repeating-linear-gradient(
@@ -68,7 +71,6 @@
       rgba(184, 184, 184, 1) 25px,
       rgba(184, 184, 184, 1) 26px
     );
-
   }
 
   .input-title {
