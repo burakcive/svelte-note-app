@@ -28,7 +28,7 @@
     height: 80%;
 
     padding-top: 5em;
-    z-index: 1;
+   
 
     background-color: rgb(186, 97, 97);
     z-index: 10;
