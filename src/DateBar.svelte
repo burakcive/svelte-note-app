@@ -1,10 +1,7 @@
 <script>
   import { createEventDispatcher } from "svelte";
 
-  let date = new Date();
-  date.setDate(date.getDate() + 2);
-
-  let expanded = false;
+    let expanded = false;
 
   const dispatch = createEventDispatcher();
 

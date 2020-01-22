@@ -65,7 +65,6 @@
     /* background-color: rgba(255, 255, 255, 1); */
     background-image: repeating-linear-gradient(0deg, transparent, transparent 25px, rgba(184, 184, 184, 1) 25px, rgba(184, 184, 184, 1) 26px );
 
-
     grid-area: textarea;
   }
 

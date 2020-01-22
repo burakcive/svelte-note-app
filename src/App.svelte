@@ -4,39 +4,71 @@
   import Footer from "./Footer.svelte";
   import NoteItem from "./NoteItem.svelte";
   import ToolBar from "./ToolBar.svelte";
-    import DateBar from "./DateBar.svelte";
+  import DateBar from "./DateBar.svelte";
 
   import { activeItem } from "./store.js";
 
-  let notes = [
-    // { id: 1, header: "Item 1", text: "Lorem ipsum dor sit amet!" },
-    // { id: 2, header: "Item 2", text: "hore more" }
-  ];
+  import { auth, googleProvider } from "./firebase";
+  import { authState } from "rxfire/auth";
+  import { db } from "./firebase";
 
-  if(window.localStorage.getItem("notes")){
-     notes = JSON.parse(window.localStorage.getItem("notes"));
-  }
+  import { collectionData } from "rxfire/firestore";
+  import { startWith } from "rxjs/operators";
+  import { empty } from "rxjs";
 
   let activeNote = {};
   let backgroundActive = false;
-  if(window.localStorage.getItem("bgactive")){
-    backgroundActive = JSON.parse(window.localStorage.getItem("bgactive"));
+
+  let user;
+
+  let uid = -1;
+
+  let query = db
+    .collection("todos")
+    .where("uid", "==", uid)
+    .orderBy("created");
+
+  $: if (user) {
+    uid = user.uid;
+
+    query = db
+      .collection("todos")
+      .where("uid", "==", uid)
+      .orderBy("created");
+
+    notes = collectionData(query, "id").pipe(startWith([]));
   }
 
+  let notes = collectionData(query, "id").pipe(startWith([]));
+
+  // Query requires an index, see screenshot below
+  const unsubscribe = authState(auth).subscribe(u => (user = u));
+
   const addNewNoteItem = () => {
-    let id = notes.length + 1;
-    notes = [...notes, { id: id, header: "", text: "" }];
+    // let id = notes.length + 1;
+    // notes = [...notes, { id: id, header: "", text: "" }];
+    if (user) {
+      db.collection("todos").add({
+        uid: user.uid,
+        header: "",
+        text: "",
+        created: Date.now()
+      });
+    }
   };
 
   const deleteActiveNoteItem = () => {
     if (activeNote && activeNote.length > 0) {
-      notes = notes.filter(n => n.id !== activeNote[0].id);
+      // notes = notes.filter(n => n.id !== activeNote[0].id);
+      db.collection("todos")
+        .doc(activeNote[0].id)
+        .delete();
     }
   };
 
   const onNoteItemSelected = e => {
     let idToSelect = e.detail;
-    activeNote = notes.filter(n => n.id === idToSelect);
+    activeNote = $notes.filter(n => n.id === idToSelect);
 
     console.log("active item ", activeNote);
     updateActiveItem(activeNote);
@@ -44,16 +76,20 @@
 
   const updateNoteItem = e => {
     var updatedItem = e.detail;
-    var index = notes.findIndex(n => n.id === updatedItem.id);
-    notes[index] = updatedItem;
+    // var index = $notes.findIndex(n => n.id === updatedItem.id);
+    // notes[index] = updatedItem;
 
-    window.localStorage.setItem("notes", JSON.stringify(notes));
+    db.collection("todos")
+      .doc(updatedItem.id)
+      .update(updatedItem);
   };
 
   const userClicked = e => {
-    backgroundActive = !backgroundActive;
-
-    window.localStorage.setItem("bgactive", JSON.stringify(backgroundActive));
+    if (!user) {
+      auth.signInWithPopup(googleProvider);
+    } else {
+      auth.signOut();
+    }
   };
 
   function updateActiveItem(active) {
@@ -107,16 +143,16 @@
 
     grid-template-areas:
       "navigation  navigation navigation"
-      "container container container"
-      /* "footer footer footer"; */
+      "container container container";
+    /* "footer footer footer"; */
   }
 
-  .footer {
+  /* .footer {
     grid-area: footer;
     background-color: #343a40 !important;
     height: 35px;
     z-index: 100;
-  }
+  } */
 
   h3 {
     color: #343a40;
@@ -124,9 +160,13 @@
   }
 </style>
 
+{#if user != null}
+  <h2>User is logged in {user.uid}</h2>
+{/if}
+
 <div class="main-grid">
 
-<DateBar />
+  <DateBar />
   <ToolBar
     on:deleteNoteItem={deleteActiveNoteItem}
     on:addNewNoteItem={addNewNoteItem}
@@ -139,15 +179,19 @@
     on:click={e => updateActiveItem(null)}
     class="text-container"
     class:background-active={backgroundActive === true}>
-    {#if notes.length > 0}
-      {#each notes as note}
-        <NoteItem
-          {...note}
-          on:onupdate={updateNoteItem}
-          on:onselected={onNoteItemSelected} />
-      {/each}
+    {#if user != null}
+      {#if $notes.length > 0}
+        {#each $notes as note}
+          <NoteItem
+            {...note}
+            on:onupdate={updateNoteItem}
+            on:onselected={onNoteItemSelected} />
+        {/each}
+      {:else}
+        <h3>Hello there, howdy? Click + sign to create a new note for Today</h3>
+      {/if}
     {:else}
-      <h3>Hello there, howdy? Click + sign to create a new note for Today</h3>
+      <h3>You are note logged in. Click on user icon to login!</h3>
     {/if}
   </div>
   <!-- <div class="footer">
