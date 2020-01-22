@@ -5,10 +5,6 @@
 
   const dispatch = createEventDispatcher();
 
-  const addNewNoteItem = () => {
-    dispatch("addNewNoteItem");
-  };
-
   const onExpand = () => {
     expanded = !expanded;
   };
@@ -48,6 +44,5 @@
   class:expanded={expanded === true}
   on:click={onExpand}
   class="side-bar side-bar-left">
-
  
 </div>

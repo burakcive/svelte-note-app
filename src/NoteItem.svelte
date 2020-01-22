@@ -49,7 +49,7 @@
     border: 2px solid #b4aaaa7d;
   }
   textarea {
-     background-color: rgba(255, 253, 250, 0.884);
+    background-color: rgba(255, 253, 250, 0.884);
     font: normal 14px verdana;
     line-height: 26px;
     padding: 16px 15px;
@@ -63,12 +63,17 @@
     grid-area: textarea;
     background-size: auto auto;
     /* background-color: rgba(255, 255, 255, 1); */
-    background-image: repeating-linear-gradient(0deg, transparent, transparent 25px, rgba(184, 184, 184, 1) 25px, rgba(184, 184, 184, 1) 26px );
+    background-image: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 25px,
+      rgba(184, 184, 184, 1) 25px,
+      rgba(184, 184, 184, 1) 26px
+    );
 
     grid-area: textarea;
   }
 
- 
   .input-title {
     background: transparent;
     border: 0;
@@ -86,20 +91,6 @@
     grid-area: header;
   }
 
-  /* .note-toolbar {
-    grid-area: toolbar;
-    background-color: rgb(113, 113, 113);
-  }
-
-  .note-toolbar > .fa {
-    cursor: pointer;
-    padding-left: 3px;
-    padding-top: 7px;
-  }
-
-  .fa:hover {
-    color: rgb(235, 229, 196);
-  } */
 </style>
 
 <div

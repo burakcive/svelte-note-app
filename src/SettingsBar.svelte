@@ -1,41 +1,31 @@
 <script>
   import { createEventDispatcher } from "svelte";
-  import { activeItem } from "./store.js";
-
-  let activated=false;
-  activeItem.subscribe(val => {
-    console.log("item activated", val);
-    activated = val && val.length > 0;
-  });
 
   const dispatch = createEventDispatcher();
 
-  const addNewNoteItem = () => {
-    dispatch("addNewNoteItem");
+  const userClicked = () => {
+    dispatch("userClicked");
   };
 
-  const deleteNoteItem = () => {
-    dispatch("deleteNoteItem");
-  };
-
-
+  export let authenticated = false;
 </script>
 
 <style>
   .side-bar {
+    padding-top: 40px;
     position: absolute;
     width: 2em;
-    height: 80%;
-
-    padding-top: 5em;
-    z-index: 1;
-
+    height: 20%;
     background-color: rgb(186, 97, 97);
-    z-index: 10;
+    z-index: 100;
     display: grid;
     grid-template-columns: 1fr;
-    bottom: 0;
     grid-template-rows: repeat(36, 1.3em);
+  }
+
+  .cover-full-page
+  {
+    height: 100%;
   }
 
   .side-bar-right {
@@ -62,7 +52,12 @@
   }
 </style>
 
-<div class="side-bar side-bar-right">
-  <i on:click={addNewNoteItem} class="fa fa-plus" />
-  <i class:disabled="{activated !== true}" on:click={deleteNoteItem} class="fa fa-trash-o" />
+<div 
+class:cover-full-page="{authenticated !== true}"
+class="side-bar side-bar-right">
+
+  <!-- Subscribe to a user store -->
+  <i on:click={userClicked} class="fa fa-user" />
+  <i class="fa fa-cog" />
+
 </div>
