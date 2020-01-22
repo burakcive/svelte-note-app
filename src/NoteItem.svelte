@@ -38,15 +38,11 @@
   }
 
   .note-item {
-    display: grid;
-    grid-template-columns: 9fr 1fr;
-    grid-template-rows: 1fr 20fr;
-
-    grid-template-areas:
-      "header header"
-      "textarea textarea";
-
+    margin: 1em;
     border: 2px solid #b4aaaa7d;
+    height: max-content;
+    min-width: 27em;
+    /* max-width: 30em; */
   }
   textarea {
     background-color: rgba(255, 253, 250, 0.884);
@@ -60,9 +56,11 @@
     outline-offset: 0;
     box-shadow: none;
     resize: none;
-    grid-area: textarea;
+    width: 100%;
+    height: 30em;
+   
     background-size: auto auto;
-    /* background-color: rgba(255, 255, 255, 1); */
+
     background-image: repeating-linear-gradient(
       0deg,
       transparent,
@@ -71,7 +69,6 @@
       rgba(184, 184, 184, 1) 26px
     );
 
-    grid-area: textarea;
   }
 
   .input-title {
@@ -87,10 +84,8 @@
     color: #617373;
     background-color: rgba(255, 253, 250, 0.884);
     text-align: center;
-
-    grid-area: header;
+    width: 100%;
   }
-
 </style>
 
 <div
@@ -108,9 +103,4 @@
     onfocus="this.placeholder = ''"
     onblur="this.placeholder = '/Type your title/'" />
   <textarea on:change={onChange} bind:value={text} />
-  <!-- <footer class="note-toolbar">
-    <i class="fa fa-arrow-left" />
-    <i class="fa fa-arrow-right" />
-    <i on:click={removeNote} class="fa fa-trash-o" />
-  </footer> -->
 </div>
