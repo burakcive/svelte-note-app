@@ -60,7 +60,7 @@
     box-shadow: none;
     resize: none;
     width: 100%;
-    height: 30em;
+    height: 10em;
 
     background-size: auto auto;
 
@@ -104,5 +104,5 @@
     placeholder="/Type your title/"
     onfocus="this.placeholder = ''"
     onblur="this.placeholder = '/Type your title/'" />
-  <textarea on:change={onChange} bind:value={text} />
+  <textarea rows="1" on:change={onChange} bind:value={text} />
 </div>

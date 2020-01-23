@@ -2,6 +2,7 @@
   import ToolBar from "./ToolBar.svelte";
   import NoteItem from "./NoteItem.svelte";
   import { activeItem } from "./store.js";
+  import { beforeUpdate, afterUpdate } from "svelte";
 
   import { db } from "./firebase";
   import { collectionData } from "rxfire/firestore";
@@ -10,6 +11,10 @@
   export let userId;
   let activeNote = {};
 
+  afterUpdate(() => {
+    autosize(document.querySelectorAll("textarea"));
+    scrollDown();
+  });
   let query = db
     .collection("todos")
     .where("uid", "==", userId)
@@ -25,6 +30,13 @@
       created: Date.now()
     });
   };
+
+  function scrollDown() {
+    var noteContainerElem = document.getElementsByClassName(
+      "note-container"
+    )[0];
+    noteContainerElem.scrollTo(0, noteContainerElem.scrollHeight);
+  }
 
   const deleteActiveNoteItem = () => {
     console.log("deleteActiveNoteItem");
@@ -64,7 +76,7 @@
     color: black;
   }
 
-  h3{
+  h3 {
     grid-column: 2;
   }
 </style>

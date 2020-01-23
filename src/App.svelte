@@ -45,11 +45,10 @@
     grid-gap: 1em;*/
     overflow: auto;
     padding: 1em;
-    padding-right: 3em; 
     display: flex;
     flex-wrap: wrap;
   
-   justify-content:center;
+   justify-content:space-around;
   /* justify-content:space-around;
     justify-content:space-between; */
   }
