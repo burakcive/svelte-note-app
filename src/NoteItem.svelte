@@ -3,6 +3,8 @@
 
   import { createEventDispatcher } from "svelte";
 
+  import { onMount } from "svelte";
+
   import { activeItem } from "./store.js";
 
   const dispatch = createEventDispatcher();
@@ -10,10 +12,15 @@
   export let header;
   export let text;
   export let id;
+  let textAreaElement;
+
+  onMount(() => {
+    autosize(textAreaElement);
+  });
 
   let activated = false;
   activeItem.subscribe(val => {
-    console.log("item activated", val);
+   
     activated = val && val.length > 0 && val[0].id === id;
   });
 
@@ -60,7 +67,7 @@
     box-shadow: none;
     resize: none;
     width: 100%;
-    height: 10em;
+    min-height: 10em;
 
     background-size: auto auto;
 
@@ -93,16 +100,21 @@
 <div
   class:activated
   on:click={onSelected}
-  in:fly={{ x: -500, duration: 500 }}
-  class="note-item">
-  <input
-    on:change={onChange}
-    bind:value={header}
-    class="input-title"
-    type="text"
-    name="input-title"
-    placeholder="/Type your title/"
-    onfocus="this.placeholder = ''"
-    onblur="this.placeholder = '/Type your title/'" />
-  <textarea rows="1" on:change={onChange} bind:value={text} />
+  class="item note-item">
+
+  <div class="item-content">
+
+    <input
+      on:change={onChange}
+      bind:value={header}
+      class="input-title"
+      type="text"
+      name="input-title"
+      placeholder="/Type your title/"
+      onfocus="this.placeholder = ''"
+      onblur="this.placeholder = '/Type your title/'" />
+
+    <textarea bind:this={textAreaElement} on:change={onChange} bind:value={text} />
+  </div>
+
 </div>

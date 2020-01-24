@@ -23,8 +23,7 @@
     grid-template-rows: repeat(36, 1.3em);
   }
 
-  .cover-full-page
-  {
+  .cover-full-page {
     height: 100%;
   }
 
@@ -52,9 +51,9 @@
   }
 </style>
 
-<div 
-class:cover-full-page="{authenticated !== true}"
-class="side-bar side-bar-right">
+<div
+  class:cover-full-page={authenticated !== true}
+  class="side-bar side-bar-right">
 
   <!-- Subscribe to a user store -->
   <i on:click={userClicked} class="fa fa-user" />

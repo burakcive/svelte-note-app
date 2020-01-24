@@ -4,7 +4,6 @@
 
   let activated=false;
   activeItem.subscribe(val => {
-    console.log("item activated", val);
     activated = val && val.length > 0;
   });
 

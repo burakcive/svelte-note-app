@@ -2,7 +2,7 @@
   import ToolBar from "./ToolBar.svelte";
   import NoteItem from "./NoteItem.svelte";
   import { activeItem } from "./store.js";
-  import { beforeUpdate, afterUpdate } from "svelte";
+  import { beforeUpdate, afterUpdate, onMount } from "svelte";
 
   import { db } from "./firebase";
   import { collectionData } from "rxfire/firestore";
@@ -11,10 +11,31 @@
   export let userId;
   let activeNote = {};
 
+  var grid;
   afterUpdate(() => {
-    autosize(document.querySelectorAll("textarea"));
+     if (document.querySelector(".grid")) {
+      var grid = new Muuri(".grid", {
+        dragEnabled: true,
+        showDuration: 300,
+        showEasing: "ease",
+        hideDuration: 300,
+        hideEasing: "ease",
+        visibleStyles: {
+          opacity: "1",
+          transform: "scale(1)"
+        },
+        hiddenStyles: {
+          opacity: "0",
+          transform: "scale(0.5)"
+        },
+        layout: {
+          fillGaps: true
+        }
+      });
+    }
     scrollDown();
   });
+
   let query = db
     .collection("todos")
     .where("uid", "==", userId)
@@ -39,7 +60,6 @@
   }
 
   const deleteActiveNoteItem = () => {
-    console.log("deleteActiveNoteItem");
     if (activeNote && activeNote.length > 0) {
       db.collection("todos")
         .doc(activeNote[0].id)
@@ -48,11 +68,9 @@
   };
 
   const onNoteItemSelected = e => {
-    console.log("onNoteItemSelected");
     let idToSelect = e.detail;
     activeNote = $notes.filter(n => n.id === idToSelect);
 
-    console.log("active item ", activeNote);
     updateActiveItem(activeNote);
   };
 
@@ -91,12 +109,14 @@
   on:addNewNoteItem={addNewNoteItem} />
 
 {#if $notes.length > 0}
-  {#each $notes as note}
-    <NoteItem
-      {...note}
-      on:onupdate={updateNoteItem}
-      on:onselected={onNoteItemSelected} />
-  {/each}
+  <div class="grid">
+    {#each $notes as note}
+      <NoteItem
+        {...note}
+        on:onupdate={updateNoteItem}
+        on:onselected={onNoteItemSelected} />
+    {/each}
+  </div>
 {:else}
   <h3>Hello there, howdy? Click + sign to create a new note for Today</h3>
 {/if}

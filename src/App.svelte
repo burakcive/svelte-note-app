@@ -39,18 +39,11 @@
   .note-container {
     grid-area: container;
     background-color: #fcfbf5;
-    /* display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-auto-rows: minmax(40em, 40em);
-    grid-gap: 1em;*/
     overflow: auto;
     padding: 1em;
-    display: flex;
+    /* display: flex;
     flex-wrap: wrap;
-  
-   justify-content:space-around;
-  /* justify-content:space-around;
-    justify-content:space-between; */
+    justify-content: space-around; */
   }
 
   .main-grid {
