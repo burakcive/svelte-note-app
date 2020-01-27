@@ -2,13 +2,14 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
 var firebaseConfig = {
-    apiKey: "AIzaSyDvJUjvlLLTvJxZzlHqwX57YhAhRtfOYYQ",
-    authDomain: "cats-test-eb078.firebaseapp.com",
-    databaseURL: "https://cats-test-eb078.firebaseio.com",
-    projectId: "cats-test-eb078",
-    storageBucket: "cats-test-eb078.appspot.com",
-    messagingSenderId: "643030912311",
-    appId: "1:643030912311:web:872dcf9408caf53e829eb2"
+    apiKey: "AIzaSyCXqFJumO0rAQnvfcNXvXUn6U57HoB112U",
+    authDomain: "scrawling-d4f9d.firebaseapp.com",
+    databaseURL: "https://scrawling-d4f9d.firebaseio.com",
+    projectId: "scrawling-d4f9d",
+    storageBucket: "scrawling-d4f9d.appspot.com",
+    messagingSenderId: "440641069725",
+    appId: "1:440641069725:web:0596f330624b5476826a74",
+    measurementId: "G-QE4ZG856G5"
 };
 
 firebase.initializeApp(firebaseConfig);
