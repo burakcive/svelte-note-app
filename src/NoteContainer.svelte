@@ -1,7 +1,7 @@
 <script>
   import ToolBar from "./ToolBar.svelte";
   import NoteItem from "./NoteItem.svelte";
-  import { activeItem } from "./store.js";
+  import { activeItem, selectedDateStore } from "./store.js";
   import { beforeUpdate, afterUpdate, onMount } from "svelte";
 
   import { db } from "./firebase";
@@ -13,21 +13,9 @@
 
   var grid;
   afterUpdate(() => {
-     if (document.querySelector(".grid")) {
+    if (document.querySelector(".grid")) {
       var grid = new Muuri(".grid", {
-        dragEnabled: true,
-        showDuration: 300,
-        showEasing: "ease",
-        hideDuration: 300,
-        hideEasing: "ease",
-        visibleStyles: {
-          opacity: "1",
-          transform: "scale(1)"
-        },
-        hiddenStyles: {
-          opacity: "0",
-          transform: "scale(0.5)"
-        },
+        dragEnabled: true,    
         layout: {
           fillGaps: true
         }
@@ -41,14 +29,15 @@
     .where("uid", "==", userId)
     .orderBy("created");
 
-  const notes = collectionData(query, "id").pipe(startWith([]));
+  let notes = collectionData(query, "id").pipe(startWith([]));
 
   const addNewNoteItem = () => {
     db.collection("todos").add({
       uid: userId,
       header: "",
       text: "",
-      created: Date.now()
+      created: Date.now(),
+      dateString : new Date().toDateInputValue()
     });
   };
 
@@ -87,6 +76,27 @@
       return (val = active);
     });
   }
+
+  selectedDateStore.subscribe(val => {
+    if (val) {
+      console.log("Selected Date is ", val);
+      //get notes for this date
+       let query = db
+        .collection("todos")
+        .where("uid", "==", userId)
+         .where("dateString", "==", val)
+        .orderBy("created");
+
+      notes = collectionData(query, "id").pipe(startWith([]));
+    }
+  });
+
+   Date.prototype.toDateInputValue = function() {
+    var local = new Date(this);
+    local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+    return local.toJSON().slice(0, 10);
+  };
+
 </script>
 
 <style>

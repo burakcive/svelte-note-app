@@ -12,6 +12,7 @@
   export let header;
   export let text;
   export let id;
+  export let dateString;
   let textAreaElement;
 
   onMount(() => {
@@ -20,7 +21,6 @@
 
   let activated = false;
   activeItem.subscribe(val => {
-   
     activated = val && val.length > 0 && val[0].id === id;
   });
 
@@ -97,13 +97,10 @@
   }
 </style>
 
-<div
-  class:activated
-  on:click={onSelected}
-  class="item note-item">
+<div class:activated on:click={onSelected} class="item note-item">
 
   <div class="item-content">
-
+    <span>{dateString}</span>
     <input
       on:change={onChange}
       bind:value={header}
@@ -114,7 +111,10 @@
       onfocus="this.placeholder = ''"
       onblur="this.placeholder = '/Type your title/'" />
 
-    <textarea bind:this={textAreaElement} on:change={onChange} bind:value={text} />
+    <textarea
+      bind:this={textAreaElement}
+      on:change={onChange}
+      bind:value={text} />
   </div>
 
 </div>
