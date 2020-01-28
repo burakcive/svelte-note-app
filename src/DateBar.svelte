@@ -13,11 +13,6 @@
     expanded = !expanded;
   };
 
-  const onDateClick = e => {
-    e.stopPropagation();
-    let jDatePicker = jQuery(datepicker);
-    console.log(jDatePicker.val());
-  };
 
   Date.prototype.toDateInputValue = function() {
     var local = new Date(this);
@@ -90,7 +85,6 @@
   class="side-bar side-bar-left">
 
   <div id="date-container">
-    <p>Date</p>
     <!-- <input
       bind:value={selectedDate}
       bind:this={calendar}
@@ -98,7 +92,7 @@
       id="calendar"
       type="date" /> -->
 
-    <div on:click={onDateClick} bind:this={datepicker} id="datepicker" />
+    <div  bind:this={datepicker} id="datepicker" />
 
   </div>
 
