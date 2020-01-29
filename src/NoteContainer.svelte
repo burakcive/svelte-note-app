@@ -9,7 +9,16 @@
   import { startWith } from "rxjs/operators";
 
   export let userId;
+
+  Date.prototype.toDateInputValue = function() {
+    var local = new Date(this);
+    local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+    return local.toJSON().slice(0, 10);
+  };
+
   let activeNote = {};
+  let today = new Date().toDateInputValue();
+  let selectedDate;
 
   var grid;
   afterUpdate(() => {
@@ -90,6 +99,7 @@
 
   selectedDateStore.subscribe(val => {
     if (val) {
+      selectedDate = val;
       console.log("Selected Date is ", val);
       //get notes for this date
       let query = db
@@ -101,12 +111,6 @@
       notes = collectionData(query, "id").pipe(startWith([]));
     }
   });
-
-  Date.prototype.toDateInputValue = function() {
-    var local = new Date(this);
-    local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
-    return local.toJSON().slice(0, 10);
-  };
 </script>
 
 <style>
@@ -138,6 +142,8 @@
         on:onselected={onNoteItemSelected} />
     {/each}
   </div>
-{:else}
+{:else if selectedDate == today}
   <h3>Hello there, howdy? Click + sign to create a new note for Today</h3>
+{:else}
+  <h3>You do not have any notes for {selectedDate}</h3>
 {/if}
