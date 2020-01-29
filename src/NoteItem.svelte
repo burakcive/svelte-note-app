@@ -27,7 +27,8 @@
         "right",
         "justify",
         "ol",
-        "ul"
+        "ul",
+        "image"
       ]
     }).panelInstance(id);
     textAreaElement.previousSibling.addEventListener("focusout", function() {
