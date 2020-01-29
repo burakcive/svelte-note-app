@@ -441,7 +441,7 @@ var nicEditorButton = bkClass.extend({
     setBg: function(A) {
         switch (A) {
             case "hover":
-                // var B = { border: "1px solid #666", backgroundColor: "#ddd" };
+                var B = { border: "1px solid #666", backgroundColor: "#ddd" };
                 break;
             case "active":
                 var B = { border: "1px solid #666", backgroundColor: "#ccc" };
