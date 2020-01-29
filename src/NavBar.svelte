@@ -5,17 +5,24 @@
 <style>
   .nav {
     height: 100%;
-    padding-left: 4em;
+    padding-left: 35px;
   }
 
   .navitem {
     margin-right: 1em;
+    font-weight: bold;
+    color: rgb(200, 211, 200);
+  }
+
+  .navitem:hover {
+    text-decoration: none;
+    color: #f7faec;
   }
 
   span {
     margin-right: 8px;
     color: #ed7a68;
-    font-size: 17px;
+    font-size: 16px;
   }
 </style>
 

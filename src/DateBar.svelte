@@ -63,10 +63,10 @@
   .side-bar {
     padding-top: 40px;
     position: absolute;
-    width: 20em;
+    width: 16em;
     height: 100%;
     border: 1px solid rgb(89, 89, 89);
-    background-color: rgb(89, 89, 89);
+    background-color: rgba(89, 89, 89, 0.75);
     z-index: 10;
 
     transition: left 400ms;
@@ -77,7 +77,7 @@
   }
 
   .side-bar-left {
-    left: -19em;
+    left: -15em;
   }
 
   .expanded {
@@ -85,7 +85,7 @@
   }
 
   .item-container {
-    padding-left: 1em;
+    padding-left: 10px;
   }
 </style>
 
@@ -100,7 +100,8 @@
 
   </div>
 
-  <div class="item-container">
+  <!-- <div class="item-container">  font-family: 'Slabo 27px', serif;
+font-family: 'Lora', serif;
     <button on:click={allNotes}>All Notes</button>
 
   </div>
@@ -108,6 +109,6 @@
   <div class="item-container">
     <button on:click={favoriteNotes}>Favorite Notes</button>
 
-  </div>
+  </div> -->
 
 </div>

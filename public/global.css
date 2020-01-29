@@ -56,3 +56,59 @@ a:hover {
     background-size: auto auto;
     background-image: repeating-linear-gradient( 0deg, transparent, transparent 25px, rgba(184, 184, 184, 0.2) 25px, rgba(184, 184, 184, 0.2) 26px);
 }
+
+.ui-datepicker-inline {
+    border-radius: 0mm !important;
+    border: 2px solid rgba(227, 248, 198, 0.25) !important;
+    font-family: 'Lora', serif;
+}
+
+.ui-datepicker {
+    width: 14em !important;
+}
+
+.ui-datepicker-header {
+    background-color: #5d5d5d !important;
+    border: unset !important;
+}
+
+.ui-datepicker-title {
+    font-size: 14px;
+    line-height: 10px !important;
+    color: rgb(191, 200, 174) !important;
+    font-weight: 300 !important;
+    text-transform: uppercase;
+}
+
+.ui-datepicker-calendar td {
+    font-size: 11px !important;
+}
+
+.ui-datepicker-next,
+.ui-datepicker-prev {
+    width: 8px !important;
+    height: 8px !important;
+    top: unset !important;
+}
+
+.ui-widget-content {
+    background: #5d5d5d !important;
+}
+
+.ui-datepicker th {
+    color: rgb(191, 200, 174) !important;
+    font-weight: 600 !important;
+    font-size: 12px;
+}
+
+.ui-state-default {
+    background-color: #5d5d5d !important;
+    border-color: rgb(191, 200, 174) !important;
+    color: rgb(191, 200, 174) !important;
+}
+
+.ui-state-active {
+    background-color: rgb(191, 200, 174) !important;
+    color: #5d5d5d !important;
+    font-weight: bold !important;
+}

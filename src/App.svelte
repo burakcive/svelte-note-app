@@ -33,12 +33,13 @@
 
 <style>
   .navigation {
-    background-color: rgb(90, 96, 102);
+    /* background-color: rgb(90, 96, 102); */
+    background-color: rgb(89, 89, 89);
     height: 25px;
     z-index: 100;
     display: grid;
     grid-template-columns: 5fr auto;
-    font-family: poor richard regular;
+   font-family: 'Lora', serif;
     font-size: 16px;
 
     grid-area: navigation;
