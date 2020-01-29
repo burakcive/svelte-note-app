@@ -30,13 +30,19 @@
         "ul"
       ]
     }).panelInstance(id);
-
-    richTextControl.addEvent("blur", function() {
+    textAreaElement.previousSibling.addEventListener("focusout", function() {
       let content = new nicEditors.findEditor(id).getContent();
       console.log(content);
       var updatedItem = { header: header, text: content, id: id };
       dispatch("onupdate", updatedItem);
     });
+
+    // richTextControl.addEvent("blur", function() {
+    //   let content = new nicEditors.findEditor(id).getContent();
+    //   console.log(content);
+    //   var updatedItem = { header: header, text: content, id: id };
+    //   dispatch("onupdate", updatedItem);
+    // });
   });
 
   let activated = false;
