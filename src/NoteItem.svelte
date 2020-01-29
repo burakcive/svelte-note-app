@@ -12,11 +12,31 @@
   export let header;
   export let text;
   export let id;
-  export let dateString;
+  // export let dateString;
   let textAreaElement;
-
   onMount(() => {
-    autosize(textAreaElement);
+    // autosize(textAreaElement);
+    var richTextControl = new nicEditor({
+      buttonList: [
+        "save",
+        "bold",
+        "italic",
+        "underline",
+        "left",
+        "center",
+        "right",
+        "justify",
+        "ol",
+        "ul"
+      ]
+    }).panelInstance(id);
+
+    richTextControl.addEvent("blur", function() {
+      let content = new nicEditors.findEditor(id).getContent();
+      console.log(content);
+      var updatedItem = { header: header, text: content, id: id };
+      dispatch("onupdate", updatedItem);
+    });
   });
 
   let activated = false;
@@ -33,10 +53,7 @@
     dispatch("onselected", id);
   };
 
-  const onChange = e => {
-    var updatedItem = { header: header, text: text, id: id };
-    dispatch("onupdate", updatedItem);
-  };
+  const onChange = e => {};
 </script>
 
 <style>
@@ -54,8 +71,13 @@
     min-width: 27em;
     /* max-width: 30em; */
   }
+
   textarea {
-    background-color: rgba(255, 253, 250, 0.884);
+    width: 100%;
+    min-height: 10em;
+
+    /* 
+     background-color: rgba(255, 253, 250, 0.884);
     font-size: 1em;
     line-height: 26px;
     padding: 16px 15px;
@@ -77,7 +99,7 @@
       transparent 25px,
       rgba(184, 184, 184, 1) 25px,
       rgba(184, 184, 184, 1) 26px
-    );
+    );  */
   }
 
   .input-title {
@@ -100,7 +122,6 @@
 <div class:activated on:click={onSelected} class="item note-item">
 
   <div class="item-content">
-    <span>{dateString}</span>
     <input
       on:change={onChange}
       bind:value={header}
@@ -112,6 +133,7 @@
       onblur="this.placeholder = '/Type your title/'" />
 
     <textarea
+      {id}
       bind:this={textAreaElement}
       on:change={onChange}
       bind:value={text} />

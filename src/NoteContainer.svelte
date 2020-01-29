@@ -15,11 +15,13 @@
   afterUpdate(() => {
     if (document.querySelector(".grid")) {
       var grid = new Muuri(".grid", {
-        dragEnabled: true,    
+        dragEnabled: false,    
         layout: {
           fillGaps: true
         }
       });
+
+      
     }
     scrollDown();
   });
