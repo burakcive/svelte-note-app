@@ -531,7 +531,7 @@ var nicEditorPane = bkClass.extend({
         this.pane = new bkElement("div").setStyle({ fontSize: "12px", border: "1px solid #ccc", overflow: "hidden", padding: "4px", textAlign: "left", backgroundColor: "#ffffc9" }).addClass("pane").setStyle(B).appendTo(this.contain);
         if (A && !A.options.noClose) { this.close = new bkElement("div").setStyle({ "float": "right", height: "16px", width: "16px", cursor: "pointer" }).setStyle(this.ne.getIcon("close", nicPaneOptions)).addEvent("mousedown", A.removePane.closure(this)).appendTo(this.pane) }
         this.contain.noSelect().appendTo(document.body);
-        // this.position();
+        //this.position();
         this.init()
     },
     init: function() {},
@@ -764,7 +764,17 @@ var nicImageOptions = {
 var nicImageButton = nicEditorAdvancedButton.extend({
     addPane: function() {
         this.im = this.ne.selectedInstance.selElm().parentTag("IMG");
-        this.addForm({ "": { type: "title", txt: "Add/Edit Image" }, src: { type: "text", txt: "URL", value: "http://", style: { width: "150px" } }, alt: { type: "text", txt: "Alt Text", style: { width: "100px" } }, align: { type: "select", txt: "Align", options: { none: "Default", left: "Left", right: "Right" } } }, this.im)
+        this.addForm({
+            "": { type: "title", txt: "Add/Edit Image" },
+            src: { type: "text", txt: "URL", value: "http://", style: { width: "170px" } },
+            alt: { type: "text", txt: "Alt Text", style: { width: "170px" } },
+            width: { type: "text", value: "300", txt: "Width", style: { width: "170px" } },
+            align: {
+                type: "select",
+                txt: "Align",
+                options: { none: "Default", left: "Left", right: "Right" }
+            }
+        }, this.im)
     },
     submit: function(B) {
         var C = this.inputs.src.value;
@@ -775,7 +785,7 @@ var nicImageButton = nicEditorAdvancedButton.extend({
             this.ne.nicCommand("insertImage", A);
             this.im = this.findElm("IMG", "src", A)
         }
-        if (this.im) { this.im.setAttributes({ src: this.inputs.src.value, alt: this.inputs.alt.value, align: this.inputs.align.value }) }
+        if (this.im) { this.im.setAttributes({ src: this.inputs.src.value, alt: this.inputs.alt.value, align: this.inputs.align.value, width: this.inputs.width.value }) }
     }
 });
 nicEditors.registerPlugin(nicPlugin, nicImageOptions);

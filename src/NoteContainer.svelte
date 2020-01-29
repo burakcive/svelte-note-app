@@ -15,13 +15,11 @@
   afterUpdate(() => {
     if (document.querySelector(".grid")) {
       var grid = new Muuri(".grid", {
-        dragEnabled: false,    
+        dragEnabled: false,
         layout: {
           fillGaps: true
         }
       });
-
-      
     }
     scrollDown();
   });
@@ -39,7 +37,7 @@
       header: "",
       text: "",
       created: Date.now(),
-      dateString : new Date().toDateInputValue()
+      dateString: new Date().toDateInputValue()
     });
   };
 
@@ -73,6 +71,17 @@
       .update(updatedItem);
   };
 
+  const addToFavorites = e => {
+    if (activeNote && activeNote.length > 0) {
+      let idToUpdate = activeNote[0].id;
+      let isFavorite = !activeNote[0].isFavorite;
+
+      db.collection("todos")
+        .doc(idToUpdate)
+        .update({ isFavorite: isFavorite });
+    }
+  };
+
   function updateActiveItem(active) {
     activeItem.update(val => {
       return (val = active);
@@ -83,22 +92,21 @@
     if (val) {
       console.log("Selected Date is ", val);
       //get notes for this date
-       let query = db
+      let query = db
         .collection("todos")
         .where("uid", "==", userId)
-         .where("dateString", "==", val)
+        .where("dateString", "==", val)
         .orderBy("created");
 
       notes = collectionData(query, "id").pipe(startWith([]));
     }
   });
 
-   Date.prototype.toDateInputValue = function() {
+  Date.prototype.toDateInputValue = function() {
     var local = new Date(this);
     local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
     return local.toJSON().slice(0, 10);
   };
-
 </script>
 
 <style>
@@ -118,7 +126,8 @@
 
 <ToolBar
   on:deleteNoteItem={deleteActiveNoteItem}
-  on:addNewNoteItem={addNewNoteItem} />
+  on:addNewNoteItem={addNewNoteItem}
+  on:addToFavorites={addToFavorites} />
 
 {#if $notes.length > 0}
   <div class="grid">

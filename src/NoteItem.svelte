@@ -12,6 +12,8 @@
   export let header;
   export let text;
   export let id;
+  export let isFavorite;
+
   // export let dateString;
   let textAreaElement;
   onMount(() => {
@@ -28,7 +30,9 @@
         "justify",
         "ol",
         "ul",
-        "image"
+        "image",
+        "forecolor",
+         "bgcolor"
       ]
     }).panelInstance(id);
     textAreaElement.previousSibling.addEventListener("focusout", function() {
@@ -77,6 +81,11 @@
     height: max-content;
     min-width: 27em;
     /* max-width: 30em; */
+  }
+
+  .favorite
+  {
+    background-color: rgba(226, 162, 162, 0.884) !important;
   }
 
   textarea {
@@ -130,6 +139,7 @@
 
   <div class="item-content">
     <input
+      class:favorite="{isFavorite=== true}"
       on:change={onChange}
       bind:value={header}
       class="input-title"

@@ -21,6 +21,14 @@
       auth.signOut();
     }
   };
+
+  const getAllNotes = () =>{
+    console.log("getAllNotes");
+  }
+
+  const getFavoriteNotes = () =>{
+    console.log("getFavoriteNotes");
+  }
 </script>
 
 <style>
@@ -73,7 +81,7 @@
 
 <div class="main-grid">
 
-  <DateBar />
+  <DateBar  on:getfavoritenotes={getFavoriteNotes} on:getallnotes={getAllNotes} />
   <SettingsBar {authenticated} on:userClicked={userClicked} />
 
   <div class="navigation">

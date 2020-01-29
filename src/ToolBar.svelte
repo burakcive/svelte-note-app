@@ -13,6 +13,10 @@
     dispatch("addNewNoteItem");
   };
 
+  const addToFavorites = () => {
+    dispatch("addToFavorites");
+  };
+
   const deleteNoteItem = () => {
     dispatch("deleteNoteItem");
   };
@@ -35,6 +39,7 @@
     grid-template-columns: 1fr;
     bottom: 0;
     grid-template-rows: repeat(36, 1.3em);
+      color: white;
   }
 
   .side-bar-right {
@@ -63,5 +68,6 @@
 
 <div class="side-bar side-bar-right">
   <i on:click={addNewNoteItem} class="fa fa-plus" />
+  <i class:disabled="{activated !== true}" on:click={addToFavorites} class="fa fa-heart" />
   <i class:disabled="{activated !== true}" on:click={deleteNoteItem} class="fa fa-trash-o" />
 </div>

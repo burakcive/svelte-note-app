@@ -21,6 +21,7 @@
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: repeat(36, 1.3em);
+    color: white;
   }
 
   .cover-full-page {

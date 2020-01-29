@@ -13,6 +13,17 @@
     expanded = !expanded;
   };
 
+  const allNotes = (e) => {
+     e.stopPropagation();
+    console.log("getAll notes");
+    dispatch("getallnotes")
+  };
+
+  const favoriteNotes = (e) => {
+    e.stopPropagation();
+    console.log("getfavoriteNotes");
+    dispatch("getfavoritenotes")
+  };
 
   Date.prototype.toDateInputValue = function() {
     var local = new Date(this);
@@ -58,7 +69,7 @@
     background-color: rgb(89, 89, 89);
     z-index: 10;
 
-    transition: left 1s;
+    transition: left 400ms;
 
     display: flex;
     flex-direction: column;
@@ -73,9 +84,8 @@
     left: 0px;
   }
 
-  #date-container
-  {
-    padding-left: 1em
+  .item-container {
+    padding-left: 1em;
   }
 </style>
 
@@ -84,15 +94,19 @@
   on:click={onExpand}
   class="side-bar side-bar-left">
 
-  <div id="date-container">
-    <!-- <input
-      bind:value={selectedDate}
-      bind:this={calendar}
-      on:click={onDateClick}
-      id="calendar"
-      type="date" /> -->
+  <div class="item-container">
 
-    <div  bind:this={datepicker} id="datepicker" />
+    <div bind:this={datepicker} id="datepicker" />
+
+  </div>
+
+  <div class="item-container">
+    <button on:click={allNotes}>All Notes</button>
+
+  </div>
+
+  <div class="item-container">
+    <button on:click={favoriteNotes}>Favorite Notes</button>
 
   </div>
 
