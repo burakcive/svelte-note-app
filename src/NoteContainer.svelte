@@ -15,7 +15,6 @@
 
   export let userId;
 
-
   Date.prototype.toDateInputValue = function() {
     var local = new Date(this);
     local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
@@ -25,8 +24,6 @@
   let activeNote = {};
   let today = new Date().toDateInputValue();
   let selectedDate;
-
-
 
   var grid;
   afterUpdate(() => {
@@ -41,12 +38,7 @@
     scrollDown();
   });
 
-  let query = db
-    .collection("todos")
-    .where("uid", "==", userId)
-    .orderBy("created");
-
-  let notes = collectionData(query, "id").pipe(startWith([]));
+  let notes = [];
 
   const addNewNoteItem = () => {
     db.collection("todos").add({
@@ -75,7 +67,7 @@
 
   const onNoteItemSelected = e => {
     let idToSelect = e.detail;
-    activeNote = $notes.filter(n => n.id === idToSelect);
+    activeNote = notes.filter(n => n.id === idToSelect);
 
     updateActiveItem(activeNote);
   };
@@ -116,7 +108,12 @@
         .where("dateString", "==", val)
         .orderBy("created");
 
-      notes = collectionData(query, "id").pipe(startWith([]));
+      var observable = collectionData(query, "id").pipe(startWith([]));
+
+      observable.subscribe(val => {
+        console.log(val);
+        notes = val;
+      });
     }
   });
 </script>
@@ -144,9 +141,9 @@
   on:addNewNoteItem={addNewNoteItem}
   on:addToFavorites={addToFavorites} />
 
-{#if $notes.length > 0}
+{#if notes.length > 0}
   <div class="grid">
-    {#each $notes as note}
+    {#each notes as note}
       <NoteItem
         {...note}
         on:onupdate={updateNoteItem}
