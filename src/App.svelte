@@ -6,8 +6,10 @@
   import DateBar from "./DateBar.svelte";
   import SettingsBar from "./SettingsBar.svelte";
 
-  import { auth, googleProvider } from "./firebase";
+  import { auth, googleProvider } from "./data/firebase";
   import { authState } from "rxfire/auth";
+
+
 
   let user;
   $: authenticated = user != null;
@@ -22,13 +24,13 @@
     }
   };
 
-  const getAllNotes = () =>{
+  const getAllNotes = () => {
     console.log("getAllNotes");
-  }
+  };
 
-  const getFavoriteNotes = () =>{
+  const getFavoriteNotes = () => {
     console.log("getFavoriteNotes");
-  }
+  };
 </script>
 
 <style>
@@ -39,7 +41,7 @@
     z-index: 100;
     display: grid;
     grid-template-columns: 5fr auto;
-    font-family: 'Lora', serif;
+    font-family: "Lora", serif;
     font-size: 16px;
 
     grid-area: navigation;
@@ -82,7 +84,9 @@
 
 <div class="main-grid">
 
-  <DateBar  on:getfavoritenotes={getFavoriteNotes} on:getallnotes={getAllNotes} />
+  <DateBar
+    on:getfavoritenotes={getFavoriteNotes}
+    on:getallnotes={getAllNotes} />
   <SettingsBar {authenticated} on:userClicked={userClicked} />
 
   <div class="navigation">

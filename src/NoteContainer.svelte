@@ -8,10 +8,8 @@
   } from "./store.js";
 
   import { beforeUpdate, afterUpdate, onMount } from "svelte";
-
-  import { db } from "./firebase";
-  import { collectionData } from "rxfire/firestore";
-  import { startWith } from "rxjs/operators";
+  import { notesRepository } from "./data/noterepo";
+  import { FirebaseResults } from "./data/firebaseresults";
 
   export let userId;
 
@@ -24,6 +22,17 @@
   let activeNote = {};
   let today = new Date().toDateInputValue();
   let selectedDate;
+  let notes = [];
+
+  $: retrieveNotes(selectedDate);
+
+  const retrieveNotes = selectedDate => {
+    notesRepository.retrieve(selectedDate, userId).onSnapshot(docs => {
+      var items = FirebaseResults.map(docs);
+      notes = items;
+      console.log("items:", items);
+    });
+  };
 
   var grid;
   afterUpdate(() => {
@@ -38,16 +47,16 @@
     scrollDown();
   });
 
-  let notes = [];
 
   const addNewNoteItem = () => {
-    db.collection("todos").add({
+    var newNoteItem = {
       uid: userId,
       header: "",
       text: "",
       created: Date.now(),
       dateString: new Date().toDateInputValue()
-    });
+    };
+    notesRepository.add(newNoteItem);
   };
 
   function scrollDown() {
@@ -59,9 +68,7 @@
 
   const deleteActiveNoteItem = () => {
     if (activeNote && activeNote.length > 0) {
-      db.collection("todos")
-        .doc(activeNote[0].id)
-        .delete();
+      notesRepository.remove(activeNote[0].id);
     }
   };
 
@@ -74,10 +81,7 @@
 
   const updateNoteItem = e => {
     var updatedItem = e.detail;
-
-    db.collection("todos")
-      .doc(updatedItem.id)
-      .update(updatedItem);
+    notesRepository.update(updatedItem.id, updatedItem);
   };
 
   const addToFavorites = e => {
@@ -85,9 +89,7 @@
       let idToUpdate = activeNote[0].id;
       let isFavorite = !activeNote[0].isFavorite;
 
-      db.collection("todos")
-        .doc(idToUpdate)
-        .update({ isFavorite: isFavorite });
+      notesRepository.update(idToUpdate, { isFavorite: isFavorite });
     }
   };
 
@@ -101,19 +103,6 @@
     if (val) {
       selectedDate = val;
       console.log("Selected Date is ", val);
-      //get notes for this date
-      let query = db
-        .collection("todos")
-        .where("uid", "==", userId)
-        .where("dateString", "==", val)
-        .orderBy("created");
-
-      var observable = collectionData(query, "id").pipe(startWith([]));
-
-      observable.subscribe(val => {
-        console.log(val);
-        notes = val;
-      });
     }
   });
 </script>
