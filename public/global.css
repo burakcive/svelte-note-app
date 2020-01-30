@@ -2,15 +2,6 @@ body {
     margin: 0;
 }
 
-a {
-    color: rgb(200, 211, 200);
-}
-
-a:hover {
-    text-decoration: none;
-    color: #f7faec;
-}
-
 .grid {
     position: relative;
 }

@@ -1,7 +1,7 @@
 <script>
   import { createEventDispatcher } from "svelte";
   import { beforeUpdate, afterUpdate, onMount } from "svelte";
-  import { selectedDateStore } from "./store.js";
+  import { selectedDateStore, dateBarExpandedState } from "./store.js";
 
   let expanded = false;
   let datepicker;
@@ -9,20 +9,23 @@
 
   const dispatch = createEventDispatcher();
 
-  const onExpand = () => {
-    expanded = !expanded;
+  const onExpand = e => {
+    e.stopPropagation();
+    dateBarExpandedState.update(val => {
+      return (val = !expanded);
+    });
   };
 
-  const allNotes = (e) => {
-     e.stopPropagation();
+  const allNotes = e => {
+    e.stopPropagation();
     console.log("getAll notes");
-    dispatch("getallnotes")
+    dispatch("getallnotes");
   };
 
-  const favoriteNotes = (e) => {
+  const favoriteNotes = e => {
     e.stopPropagation();
     console.log("getfavoriteNotes");
-    dispatch("getfavoritenotes")
+    dispatch("getfavoritenotes");
   };
 
   Date.prototype.toDateInputValue = function() {
@@ -57,6 +60,10 @@
       return (val = selectedDate);
     });
   }
+
+  dateBarExpandedState.subscribe(val => {
+    expanded = val;
+  });
 </script>
 
 <style>

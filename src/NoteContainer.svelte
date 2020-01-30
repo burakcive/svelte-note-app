@@ -1,7 +1,12 @@
 <script>
   import ToolBar from "./ToolBar.svelte";
   import NoteItem from "./NoteItem.svelte";
-  import { activeItem, selectedDateStore } from "./store.js";
+  import {
+    activeItem,
+    selectedDateStore,
+    dateBarExpandedState
+  } from "./store.js";
+
   import { beforeUpdate, afterUpdate, onMount } from "svelte";
 
   import { db } from "./firebase";
@@ -9,6 +14,7 @@
   import { startWith } from "rxjs/operators";
 
   export let userId;
+
 
   Date.prototype.toDateInputValue = function() {
     var local = new Date(this);
@@ -19,6 +25,8 @@
   let activeNote = {};
   let today = new Date().toDateInputValue();
   let selectedDate;
+
+
 
   var grid;
   afterUpdate(() => {
@@ -126,6 +134,9 @@
 <svelte:body
   on:click={() => {
     updateActiveItem(null);
+    dateBarExpandedState.update(val => {
+      return (val = false);
+    });
   }} />
 
 <ToolBar

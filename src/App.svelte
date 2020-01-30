@@ -39,7 +39,7 @@
     z-index: 100;
     display: grid;
     grid-template-columns: 5fr auto;
-   font-family: 'Lora', serif;
+    font-family: 'Lora', serif;
     font-size: 16px;
 
     grid-area: navigation;
