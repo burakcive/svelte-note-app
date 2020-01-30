@@ -8,13 +8,16 @@
     padding-left: 35px;
   }
 
-  .navitem {
+  .navitem,
+  a {
     margin-right: 1em;
     font-weight: bold;
     color: rgb(200, 211, 200);
+    font-size: 14px;
   }
 
-  .navitem:hover {
+  .navitem:hover,
+  a:hover {
     text-decoration: none;
     color: #f7faec;
   }
