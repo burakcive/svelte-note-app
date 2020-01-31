@@ -5,11 +5,9 @@
 
   import DateBar from "./DateBar.svelte";
   import SettingsBar from "./SettingsBar.svelte";
-
+  import  AuthenticationForm  from "./Authentication.svelte";
   import { auth, googleProvider } from "./data/firebase";
   import { authState } from "rxfire/auth";
-
-
 
   let user;
   $: authenticated = user != null;
@@ -17,11 +15,12 @@
   const unsubscribe = authState(auth).subscribe(u => (user = u));
 
   const userClicked = e => {
-    if (!user) {
-      auth.signInWithPopup(googleProvider);
-    } else {
-      auth.signOut();
-    }
+    // if (!user) {
+    //   auth.signInWithPopup(googleProvider);
+    // } else {
+    //   
+    // }
+    auth.signOut();
   };
 
   const getAllNotes = () => {
@@ -84,20 +83,24 @@
 
 <div class="main-grid">
 
-  <DateBar
-    on:getfavoritenotes={getFavoriteNotes}
-    on:getallnotes={getAllNotes} />
+ 
+
   <SettingsBar {authenticated} on:userClicked={userClicked} />
 
   <div class="navigation">
     <NavBar />
   </div>
-  <div class="note-container">
-    {#if user != null}
+
+  {#if user != null}
+   <DateBar
+    on:getfavoritenotes={getFavoriteNotes}
+    on:getallnotes={getAllNotes} />
+    
+    <div class="note-container">
       <NoteContainer userId={user.uid} />
-    {:else}
-      <h3>You are note logged in. Click on user icon to login!</h3>
-    {/if}
-  </div>
+    </div>
+  {:else}
+    <AuthenticationForm />
+  {/if}
 
 </div>

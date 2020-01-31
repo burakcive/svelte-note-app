@@ -50,6 +50,11 @@
     font-size: 16px !important;
     padding-left: 8px;
   }
+
+  .user-active
+  {
+    color: #b0e859;
+  }
 </style>
 
 <div
@@ -57,7 +62,7 @@
   class="side-bar side-bar-right">
 
   <!-- Subscribe to a user store -->
-  <i on:click={userClicked} class="fa fa-user" />
+  <i on:click={userClicked} class="fa fa-user"   class:user-active={authenticated === true} />
   <i class="fa fa-cog" />
 
 </div>
