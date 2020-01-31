@@ -15,10 +15,17 @@ const notesDB = () => {
         return FirebaseNotes.doc(noteId).update(noteInfo);
     }
 
-    const retrieve = (dateString, userId) => {
+    const retrieveByDate = (dateString, userId) => {
         let query = FirebaseNotes
             .where("uid", "==", userId)
             .where("dateString", "==", dateString);
+
+        return query.orderBy("created");
+    }
+
+    const retrieveAll = (userId) => {
+        let query = FirebaseNotes
+            .where("uid", "==", userId)
 
         return query.orderBy("created");
     }
@@ -27,7 +34,8 @@ const notesDB = () => {
         add,
         remove,
         update,
-        retrieve
+        retrieveByDate,
+        retrieveAll
     })
 }
 

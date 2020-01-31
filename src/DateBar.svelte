@@ -19,7 +19,7 @@
   const allNotes = e => {
     e.stopPropagation();
     console.log("getAll notes");
-    dispatch("getallnotes");
+     selectedDate = "all";
   };
 
   const favoriteNotes = e => {
@@ -107,13 +107,11 @@
 
   </div>
 
-  <!-- <div class="item-container">  font-family: 'Slabo 27px', serif;
-font-family: 'Lora', serif;
+  <div class="item-container">
     <button on:click={allNotes}>All Notes</button>
-
   </div>
 
-  <div class="item-container">
+  <!-- <div class="item-container">
     <button on:click={favoriteNotes}>Favorite Notes</button>
 
   </div> -->

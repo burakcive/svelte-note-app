@@ -26,12 +26,23 @@
 
   $: retrieveNotes(selectedDate);
 
+  function parseQueryResult(docs) {
+    var items = FirebaseResults.map(docs);
+    notes = items;
+    console.log("items:", items);
+  }
+
   const retrieveNotes = selectedDate => {
-    notesRepository.retrieve(selectedDate, userId).onSnapshot(docs => {
-      var items = FirebaseResults.map(docs);
-      notes = items;
-      console.log("items:", items);
-    });
+    if(selectedDate === "all"){
+      notesRepository
+        .retrieveAll(userId)
+        .onSnapshot(docs => parseQueryResult(docs));
+    }
+    else if (selectedDate) {
+      notesRepository
+        .retrieveByDate(selectedDate, userId)
+        .onSnapshot(docs => parseQueryResult(docs));
+    } 
   };
 
   var grid;
@@ -46,7 +57,6 @@
     }
     scrollDown();
   });
-
 
   const addNewNoteItem = () => {
     var newNoteItem = {

@@ -32,7 +32,6 @@
 
     padding-top: 5em;
    
-
     background-color: rgb(186, 97, 97);
     z-index: 10;
     display: grid;
