@@ -67,7 +67,7 @@
   }
 
   .auth-cover {
-    background: url(https://s2.best-wallpaper.net/wallpaper/1920x1200/1710/Symphony-notes-piano-dust_1920x1200.jpg);
+    background: url(https://c.wallhere.com/photos/d4/ec/books_vintagebooks_coffee_espresso_music_pointofview_fromabove_musicnotes-661420.jpg!d);
     background-repeat: no-repeat;
     background-size: cover;
   }
