@@ -4,9 +4,12 @@
 
   let email;
   let password;
+  let registerName;
+  let registerEmail;
+  let registerPassword;
   let isRegisterFormActive = false;
   const onRegister = () => {
-    auth.createUserWithEmailAndPassword(email, password).catch(function(error) {
+    auth.createUserWithEmailAndPassword(registerEmail, registerPassword).catch(function(error) {
       // Handle Errors here.
       var errorCode = error.code;
       var errorMessage = error.message;
@@ -73,7 +76,7 @@
     font-family: "Roboto", sans-serif;
     text-transform: uppercase;
     outline: 0;
-    background: #4caf50;
+    background: rgb(186, 97, 97);
     width: 100%;
     border: 0;
     padding: 15px;
@@ -87,7 +90,7 @@
   .form button:hover,
   .form button:active,
   .form button:focus {
-    background: #43a047;
+    background: rgb(133, 53, 53);
   }
   .form .message {
     margin: 15px 0 0;
@@ -104,7 +107,7 @@
   }
 
   b{
-      color: #4caf50;
+      color: rgb(186, 97, 97);
       cursor: pointer;
   }
 </style>
@@ -119,22 +122,22 @@
   <button on:click={signIn}>SignIn</button>
 </div> -->
 
-<div class="authContainer login-page">
+ <div class="authContainer login-page">
   <div class="form">
-    <form
+    <div
       class="register-form"
       class:register-form-active={isRegisterFormActive === true}>
-      <input  type="text" placeholder="name" />
-      <input bind:value={email} type="text" placeholder="email address" />
-      <input bind:value={password} type="password" placeholder="password" />
+      <input  bind:value={registerName} type="text" placeholder="name" />
+      <input bind:value={registerEmail} type="text" placeholder="email address" />
+      <input bind:value={registerPassword} type="password" placeholder="password" />
       <button on:click={onRegister}>Register</button>
       <p class="message">
         Already registered?
         <b on:click={toggleRegisterForm}>Sign In</b>
       </p>
-    </form>
+    </div>
 
-    <form class="login-form"  class:register-form-active={isRegisterFormActive !== true}>
+    <div class="login-form"  class:register-form-active={isRegisterFormActive !== true}>
       <input bind:value={email} type="text" placeholder="Email" />
       <input  bind:value={password} type="password" placeholder="password" />
       <button on:click={signIn}>Log In</button>
@@ -144,6 +147,6 @@
         Not registered?
         <b on:click={toggleRegisterForm}>Create an account</b>
       </p>
-    </form>
+    </div>
   </div>
-</div>
+</div> 

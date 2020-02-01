@@ -45,14 +45,13 @@
     } 
   };
 
-  var grid;
   afterUpdate(() => {
     if (document.querySelector(".grid")) {
       var grid = new Muuri(".grid", {
         dragEnabled: false,
-        layout: {
-          fillGaps: true
-        }
+        // layout: {
+        //   fillGaps: true
+        // }
       });
     }
     scrollDown();

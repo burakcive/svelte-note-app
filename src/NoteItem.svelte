@@ -1,6 +1,4 @@
 <script>
-  import { fade, fly } from "svelte/transition";
-
   import { createEventDispatcher } from "svelte";
 
   import { onMount } from "svelte";
@@ -24,10 +22,10 @@
         "bold",
         "italic",
         "underline",
-        "left",
-        "center",
-        "right",
-        "justify",
+        // "left",
+        // "center",
+        // "right",
+        // "justify",
         "ol",
         "ul",
         "image",

@@ -1,12 +1,12 @@
 <script>
   import NavBar from "./NavBar.svelte";
   import NoteContainer from "./NoteContainer.svelte";
-  import { onMount, setContext } from "svelte";
+  import { onMount } from "svelte";
 
   import DateBar from "./DateBar.svelte";
   import SettingsBar from "./SettingsBar.svelte";
-  import  AuthenticationForm  from "./Authentication.svelte";
-  import { auth, googleProvider } from "./data/firebase";
+  import AuthenticationForm from "./Authentication.svelte";
+  import { auth } from "./data/firebase";
   import { authState } from "rxfire/auth";
 
   let user;
@@ -15,11 +15,6 @@
   const unsubscribe = authState(auth).subscribe(u => (user = u));
 
   const userClicked = e => {
-    // if (!user) {
-    //   auth.signInWithPopup(googleProvider);
-    // } else {
-    //   
-    // }
     auth.signOut();
   };
 
@@ -71,9 +66,10 @@
       "container container container";
   }
 
-  h3 {
-    color: #343a40;
-    grid-column: 2;
+  .auth-cover {
+    background: url(https://s2.best-wallpaper.net/wallpaper/1920x1200/1710/Symphony-notes-piano-dust_1920x1200.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
   }
 </style>
 
@@ -81,21 +77,21 @@
   <h2>User is logged in {user.uid}</h2>
 {/if}
 
-<div class="main-grid">
+<div class="main-grid" class:auth-cover={user === null}>
 
- 
-
-  <SettingsBar {authenticated} on:userClicked={userClicked} />
+  {#if user != null}
+    <SettingsBar {authenticated} on:userClicked={userClicked} />
+  {/if}
 
   <div class="navigation">
     <NavBar />
   </div>
 
   {#if user != null}
-   <DateBar
-    on:getfavoritenotes={getFavoriteNotes}
-    on:getallnotes={getAllNotes} />
-    
+    <DateBar
+      on:getfavoritenotes={getFavoriteNotes}
+      on:getallnotes={getAllNotes} />
+
     <div class="note-container">
       <NoteContainer userId={user.uid} />
     </div>
