@@ -12,13 +12,9 @@
   export let id;
   export let isFavorite;
   export let index;
-
-  console.log(index)
-
-  // export let dateString;
+  
   let textAreaElement;
   onMount(() => {
-    // autosize(textAreaElement);
     var richTextControl = new nicEditor({
       buttonList: [
         "save",
