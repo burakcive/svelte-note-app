@@ -4,11 +4,11 @@ const FirebaseNotes = firebaseStore.collection('todos');
 
 const notesDB = () => {
     const add = note => {
-        FirebaseNotes.add(note)
+        return FirebaseNotes.add(note);
     }
 
     const remove = id => {
-        FirebaseNotes.doc(id).delete();
+        return FirebaseNotes.doc(id).delete();
     }
 
     const update = (noteId, noteInfo) => {
@@ -30,12 +30,21 @@ const notesDB = () => {
         return query.orderBy("created");
     }
 
+    const retrieveFavorites = (userId) => {
+        let query = FirebaseNotes
+            .where("uid", "==", userId)
+            .where("isFavorite", "==", true)
+
+        return query.orderBy("created");
+    }
+
     return Object.freeze({
         add,
         remove,
         update,
         retrieveByDate,
-        retrieveAll
+        retrieveAll,
+        retrieveFavorites
     })
 }
 

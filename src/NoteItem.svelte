@@ -11,6 +11,9 @@
   export let text;
   export let id;
   export let isFavorite;
+  export let index;
+
+  console.log(index)
 
   // export let dateString;
   let textAreaElement;
@@ -35,17 +38,10 @@
     }).panelInstance(id);
     textAreaElement.previousSibling.addEventListener("focusout", function() {
       let content = new nicEditors.findEditor(id).getContent();
-      console.log(content);
-      var updatedItem = { header: header, text: content, id: id };
+      var updatedItem = { header: header, text: content, id: id, isFavorite: isFavorite===true};
       dispatch("onupdate", updatedItem);
     });
 
-    // richTextControl.addEvent("blur", function() {
-    //   let content = new nicEditors.findEditor(id).getContent();
-    //   console.log(content);
-    //   var updatedItem = { header: header, text: content, id: id };
-    //   dispatch("onupdate", updatedItem);
-    // });
   });
 
   let activated = false;
@@ -62,7 +58,6 @@
     dispatch("onselected", id);
   };
 
-  const onChange = e => {};
 </script>
 
 <style>
@@ -89,31 +84,6 @@
   textarea {
     width: 100%;
     min-height: 10em;
-
-    /* 
-     background-color: rgba(255, 253, 250, 0.884);
-    font-size: 1em;
-    line-height: 26px;
-    padding: 16px 15px;
-    border: 0;
-    border-style: none;
-    border-color: transparent;
-    outline: none;
-    outline-offset: 0;
-    box-shadow: none;
-    resize: none;
-    width: 100%;
-    min-height: 10em;
-
-    background-size: auto auto;
-
-    background-image: repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 25px,
-      rgba(184, 184, 184, 1) 25px,
-      rgba(184, 184, 184, 1) 26px
-    );  */
   }
 
   .input-title {
@@ -133,12 +103,11 @@
   }
 </style>
 
-<div class:activated on:click={onSelected} class="item note-item">
+<div tabindex={index} class:activated on:click={onSelected} class="item note-item">
 
   <div class="item-content">
     <input
       class:favorite="{isFavorite=== true}"
-      on:change={onChange}
       bind:value={header}
       class="input-title"
       type="text"
@@ -150,7 +119,6 @@
     <textarea
       {id}
       bind:this={textAreaElement}
-      on:change={onChange}
       bind:value={text} />
   </div>
 

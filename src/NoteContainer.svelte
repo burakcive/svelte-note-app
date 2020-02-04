@@ -33,22 +33,35 @@
   }
 
   const retrieveNotes = selectedDate => {
-    if(selectedDate === "all"){
+    if (selectedDate === "favorites") {
+      notesRepository
+        .retrieveFavorites(userId)
+        .get()
+        .then(docs => {
+          parseQueryResult(docs);
+        });
+    }
+    else if (selectedDate === "all") {
       notesRepository
         .retrieveAll(userId)
-        .onSnapshot(docs => parseQueryResult(docs));
-    }
-    else if (selectedDate) {
+        .get()
+        .then(docs => {
+          parseQueryResult(docs);
+        });
+    } else if (selectedDate) {
       notesRepository
         .retrieveByDate(selectedDate, userId)
-        .onSnapshot(docs => parseQueryResult(docs));
-    } 
+        .get()
+        .then(docs => {
+          parseQueryResult(docs);
+        });
+    }
   };
 
   afterUpdate(() => {
     if (document.querySelector(".grid")) {
       var grid = new Muuri(".grid", {
-        dragEnabled: false,
+        dragEnabled: false
         // layout: {
         //   fillGaps: true
         // }
@@ -62,10 +75,17 @@
       uid: userId,
       header: "",
       text: "",
+      isFavorite: false,
       created: Date.now(),
       dateString: new Date().toDateInputValue()
     };
-    notesRepository.add(newNoteItem);
+    notesRepository.add(newNoteItem).then(res => {
+      if (selectedDate === new Date().toDateInputValue()) {
+        retrieveNotes(selectedDate);
+      } else {
+        selectedDate = new Date().toDateInputValue();
+      }
+    });
   };
 
   function scrollDown() {
@@ -78,6 +98,8 @@
   const deleteActiveNoteItem = () => {
     if (activeNote && activeNote.length > 0) {
       notesRepository.remove(activeNote[0].id);
+
+      notes = notes.filter(n => n.id !== activeNote[0].id);
     }
   };
 
@@ -91,6 +113,7 @@
   const updateNoteItem = e => {
     var updatedItem = e.detail;
     notesRepository.update(updatedItem.id, updatedItem);
+
   };
 
   const addToFavorites = e => {
@@ -99,6 +122,10 @@
       let isFavorite = !activeNote[0].isFavorite;
 
       notesRepository.update(idToUpdate, { isFavorite: isFavorite });
+
+      //change the property in index
+      var indexToUpdate = notes.findIndex(x=> x.id === idToUpdate);
+      notes[indexToUpdate].isFavorite = isFavorite;
     }
   };
 
@@ -141,9 +168,10 @@
 
 {#if notes.length > 0}
   <div class="grid">
-    {#each notes as note}
+    {#each notes as note, index}
       <NoteItem
         {...note}
+        {index}
         on:onupdate={updateNoteItem}
         on:onselected={onNoteItemSelected} />
     {/each}

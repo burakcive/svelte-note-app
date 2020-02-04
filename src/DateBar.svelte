@@ -19,13 +19,13 @@
   const allNotes = e => {
     e.stopPropagation();
     console.log("getAll notes");
-     selectedDate = "all";
+    selectedDate = "all";
   };
 
   const favoriteNotes = e => {
     e.stopPropagation();
     console.log("getfavoriteNotes");
-    dispatch("getfavoritenotes");
+    selectedDate = "favorites";
   };
 
   Date.prototype.toDateInputValue = function() {
@@ -111,9 +111,9 @@
     <button on:click={allNotes}>All Notes</button>
   </div>
 
-  <!-- <div class="item-container">
+   <div class="item-container">
     <button on:click={favoriteNotes}>Favorite Notes</button>
 
-  </div> -->
+  </div> 
 
 </div>
