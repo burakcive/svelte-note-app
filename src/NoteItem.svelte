@@ -1,7 +1,7 @@
 <script>
   import { createEventDispatcher } from "svelte";
 
-  import { onMount } from "svelte";
+  import { onMount, onDestroy } from "svelte";
 
   import { activeItem } from "./store.js";
 
@@ -12,32 +12,46 @@
   export let id;
   export let isFavorite;
   export let index;
-  
-  let textAreaElement;
-  onMount(() => {
-    var richTextControl = new nicEditor({
-      buttonList: [
-        "save",
-        "bold",
-        "italic",
-        "underline",
-        // "left",
-        // "center",
-        // "right",
-        // "justify",
-        "ol",
-        "ul",
-        "image",
-        "forecolor",
-         "bgcolor"
-      ]
-    }).panelInstance(id);
-    textAreaElement.previousSibling.addEventListener("focusout", function() {
-      let content = new nicEditors.findEditor(id).getContent();
-      var updatedItem = { header: header, text: content, id: id, isFavorite: isFavorite===true};
-      dispatch("onupdate", updatedItem);
-    });
 
+  let textAreaElement;
+  let richTextControl;
+  onMount(() => {
+    console.log(header, text);
+    // richTextControl = new nicEditor({
+    //   buttonList: [
+    //     "save",
+    //     "bold",
+    //     "italic",
+    //     "underline",
+    //     // "left",
+    //     // "center",
+    //     // "right",
+    //     // "justify",
+    //     "ol",
+    //     "ul",
+    //     "image",
+    //     "forecolor",
+    //     "bgcolor"
+    //   ]
+    // }).panelInstance(id, { hasPanel: true });
+    // textAreaElement.previousSibling.addEventListener("focusout", function() {
+    //   let content = new nicEditors.findEditor(id).getContent();
+    //   var updatedItem = {
+    //     header: header,
+    //     text: content,
+    //     id: id,
+    //     isFavorite: isFavorite === true
+    //   };
+
+    //   console.log(header + " will be updated.");
+    //   dispatch("onupdate", updatedItem);
+    // });
+  });
+
+  onDestroy(() => {
+    console.log("destroyed ", id);
+    // richTextControl.removeInstance(id);
+    // richTextControl = null;
   });
 
   let activated = false;
@@ -53,7 +67,6 @@
     e.stopPropagation();
     dispatch("onselected", id);
   };
-
 </script>
 
 <style>
@@ -68,12 +81,10 @@
     margin: 1em;
     border: 2px solid #b4aaaa7d;
     height: max-content;
-    min-width: 27em;
-    /* max-width: 30em; */
+    max-width: 25em;
   }
 
-  .favorite
-  {
+  .favorite {
     background-color: rgba(226, 162, 162, 0.884) !important;
   }
 
@@ -99,23 +110,16 @@
   }
 </style>
 
-<div tabindex={index} class:activated on:click={onSelected} class="item note-item">
+<div class="note-item" class:activated on:click={onSelected}>
+  <input
+    class:favorite={isFavorite === true}
+    bind:value={header}
+    class="input-title"
+    type="text"
+    name="input-title"
+    placeholder="/Type your title/"
+    onfocus="this.placeholder = ''"
+    onblur="this.placeholder = '/Type your title/'" />
 
-  <div class="item-content">
-    <input
-      class:favorite="{isFavorite=== true}"
-      bind:value={header}
-      class="input-title"
-      type="text"
-      name="input-title"
-      placeholder="/Type your title/"
-      onfocus="this.placeholder = ''"
-      onblur="this.placeholder = '/Type your title/'" />
-
-    <textarea
-      {id}
-      bind:this={textAreaElement}
-      bind:value={text} />
-  </div>
-
+  <textarea {id} bind:this={textAreaElement} bind:value={text} />
 </div>

@@ -191,13 +191,21 @@ var nicEditor = bkClass.extend({
         this.setPanel(A);
         return this.addInstance(B, C)
     },
-    checkReplace: function(B) {
-        var A = nicEditors.findEditor(B);
-        if (A) {
-            A.removeInstance(B);
-            A.removePanel()
+    checkReplace: function(e) {
+        var r;
+        var editors = nicEditors.editors;
+        for (var i = 0; i < editors.length; i++) {
+            if (editors[i].instanceById(e)) {
+                r = editors[i]; // r is an instance of nicEditorInstance therefore it does not have removeInstance or removePanel methods
+                break;
+            }
         }
-        return B
+
+        if (r) {
+            r.removeInstance(e);
+            r.removePanel();
+        }
+        return e;
     },
     addInstance: function(B, C) {
         B = this.checkReplace($BK(B));

@@ -40,8 +40,7 @@
         .then(docs => {
           parseQueryResult(docs);
         });
-    }
-    else if (selectedDate === "all") {
+    } else if (selectedDate === "all") {
       notesRepository
         .retrieveAll(userId)
         .get()
@@ -59,14 +58,7 @@
   };
 
   afterUpdate(() => {
-    if (document.querySelector(".grid")) {
-      var grid = new Muuri(".grid", {
-        dragEnabled: false
-        // layout: {
-        //   fillGaps: true
-        // }
-      });
-    }
+    
     scrollDown();
   });
 
@@ -106,7 +98,7 @@
   const onNoteItemSelected = e => {
     let idToSelect = e.detail;
     activeNote = notes.filter(n => n.id === idToSelect);
-
+    console.log(activeNote);
     updateActiveItem(activeNote);
   };
 
@@ -114,6 +106,10 @@
     var updatedItem = e.detail;
     notesRepository.update(updatedItem.id, updatedItem);
 
+    //change the property in index
+    var indexToUpdate = notes.findIndex(x => x.id === updatedItem.id);
+    notes[indexToUpdate].text = updatedItem.text;
+    notes[indexToUpdate].header = updatedItem.header;
   };
 
   const addToFavorites = e => {
@@ -124,7 +120,7 @@
       notesRepository.update(idToUpdate, { isFavorite: isFavorite });
 
       //change the property in index
-      var indexToUpdate = notes.findIndex(x=> x.id === idToUpdate);
+      var indexToUpdate = notes.findIndex(x => x.id === idToUpdate);
       notes[indexToUpdate].isFavorite = isFavorite;
     }
   };
@@ -141,6 +137,7 @@
       console.log("Selected Date is ", val);
     }
   });
+
 </script>
 
 <style>
@@ -167,15 +164,13 @@
   on:addToFavorites={addToFavorites} />
 
 {#if notes.length > 0}
-  <div class="grid">
-    {#each notes as note, index}
-      <NoteItem
-        {...note}
-        {index}
-        on:onupdate={updateNoteItem}
-        on:onselected={onNoteItemSelected} />
-    {/each}
-  </div>
+  {#each notes as note, index}
+    <NoteItem
+      {...note}
+      {index}
+      on:onupdate={updateNoteItem}
+      on:onselected={onNoteItemSelected} />
+  {/each}
 {:else if selectedDate == today}
   <h3>Hello there, howdy? Click + sign to create a new note for Today</h3>
 {:else}

@@ -46,6 +46,7 @@
     background-color: #fcfbf5;
     overflow: auto;
     padding: 1em;
+    padding-right: 3em;
     /* display: flex;
     flex-wrap: wrap;
     justify-content: space-around; */
